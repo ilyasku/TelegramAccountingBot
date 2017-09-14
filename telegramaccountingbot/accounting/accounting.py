@@ -4,7 +4,7 @@ class Bookkeeper:
 
     def __init__(self):
         self.persistence = None
-        self.dict_id_to_name
+        self.dict_id_to_name = None
 
     def set_persistence(self, persistence):
         self.persistence = persistence
