@@ -1,5 +1,5 @@
 from telegram.ext import CommandHandler
-
+import time
 from . import text_generator
 
 
@@ -16,13 +16,36 @@ class Bot:
 
     def initialize_handler(self):
         dispatcher = self.updater.dispatcher
-        balance_handler = CommandHandler('balance', self._handle_balance)
-        dispatcher.add_handler(balance_handler)
+        balance_handler = CommandHandler(
+            'balance', self._handle_balance)
+        dispatcher.add_handler(balance_handler)        
         
     def _handle_balance(self, bot, update):
         telegram_id = update.message.chat_id
         message = text_generator.balance_dict_to_message(
             self.bookkeeper.dict_id_to_name,
-            self.bookkeeper.get_balance())
+            self.bookkeeper.get_balance())        
         bot.send_message(chat_id=telegram_id,
                          text=message)
+
+    def start_polling(self):
+        self.updater.start_polling(0.5)
+
+    def stop_polling(self):
+        self.updater.stop()
+
+
+def handle_balance(bot, update):
+    telegram_id = update.message.chat_id
+    message = "jau jau wau jau hau"
+    bot.send_message(chat_id=telegram_id,
+                     text=message)
+
+    
+def handle_balance_for_lambda(bot, update, bookkeeper):
+    telegram_id = update.message.chat_id
+    message = text_generator.balance_dict_to_message(
+        bookkeeper.dict_id_to_name,
+        bookkeeper.get_balance())
+    bot.send_message(chat_id=telegram_id,
+                     text=message)
