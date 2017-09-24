@@ -17,7 +17,7 @@ class Bookkeeper:
         for _id in self.dict_id_to_name.keys():
             list_of_transactions = self.persistence.get_transactions(_id)
             _sum = self._sum_transactions(list_of_transactions)
-            balance_dict[self.dict_id_to_name[_id]] = _sum
+            balance_dict[_id] = _sum
             average += _sum
             count += 1
         balance_dict["average"] = average / count
@@ -27,3 +27,4 @@ class Bookkeeper:
         _sum = 0.0
         for t in list_of_transactions:
             _sum += t["value"]
+        return _sum

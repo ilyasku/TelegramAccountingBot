@@ -23,9 +23,16 @@ class Bot:
     def _handle_balance(self, bot, update):
         print("==== _handle_balance")
         telegram_id = update.message.chat_id
+        print(telegram_id)
+        d_id_to_name = self.bookkeeper.dict_id_to_name
+        print("======== d_id_to_name")
+        print(d_id_to_name)
+        d_balance = self.bookkeeper.get_balance()
+        print("======== d_balance")
+        print(d_balance)
         message = text_generator.balance_dict_to_message(
-            self.bookkeeper.dict_id_to_name,
-            self.bookkeeper.get_balance())        
+            d_id_to_name,
+            d_balance)        
         bot.send_message(chat_id=telegram_id,
                          text=message)
 
