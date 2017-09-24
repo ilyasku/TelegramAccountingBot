@@ -14,7 +14,7 @@ class InMemoryPersistence:
         self._transactions = []
         self._id_to_name = []
 
-    def add_id_to_name(self, _id, name):
+    def add_id_name_pair(self, _id, name):
         self._id_to_name.append((_id, name))
 
     def get_dict_id_to_name(self):
@@ -39,19 +39,24 @@ class InMemoryPersistence:
 class MockBookkeeper(Bookkeeper):
     def __init__(self):
         self.dict_id_to_name = {"a": "Anna", "b": "Bruno",
-                                "c": "Christ", "174510834": "Ilyas"}
+                                "c": "Christ", 174510834: "Ilyas",
+                                370060018: "Annika"}
 
     def get_balance(self):
         return {"a": 501, "b": 3010,
                 "c": 1267, "174510834": 500,
                 "average": 1317}
-    
+
+
 def main():
+    import logging
+    logging.basicConfig(level=logging.WARNING,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     bot = Bot()
     bookkeeper = Bookkeeper()
     persistence = InMemoryPersistence()    
-    persistence.add_id_to_name("174510834", "Ilyas")
-    persistence.add_transaction("174510834", 1267, "today", "Nahkauf")
+    persistence.add_id_name_pair(174510834, "Ilyas")
+    persistence.add_transaction(174510834, 1267, "today", "Nahkauf")
     bookkeeper.set_persistence(persistence)
     bot.set_bookkeeper(bookkeeper)
     bot.set_updater(Updater(token=token))

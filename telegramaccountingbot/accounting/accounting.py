@@ -10,6 +10,15 @@ class Bookkeeper:
         self.persistence = persistence
         self.dict_id_to_name = persistence.get_dict_id_to_name()
 
+    def add_transaction(self, _id, value, date, location):
+        self.persistence.add_transaction(_id, value, date, location)
+
+    def has_id(self, _id):
+        for ID in self.dict_id_to_name.keys():
+            if ID == _id:
+                return True
+        return False
+        
     def get_balance(self):
         balance_dict = {}
         count = 0
