@@ -26,4 +26,4 @@ class Bookkeeper:
     def _sum_transactions(self, list_of_transactions):
         _sum = 0.0
         for t in list_of_transactions:
-            _sum += t.value
+            _sum += t["value"]

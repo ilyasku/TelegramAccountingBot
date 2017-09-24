@@ -21,6 +21,7 @@ class Bot:
         dispatcher.add_handler(balance_handler)        
         
     def _handle_balance(self, bot, update):
+        print("==== _handle_balance")
         telegram_id = update.message.chat_id
         message = text_generator.balance_dict_to_message(
             self.bookkeeper.dict_id_to_name,

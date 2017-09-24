@@ -1,6 +1,5 @@
 from telegram.ext import Updater
 from telegramaccountingbot.bot.bot import Bot
-from telegramaccountingbot.bot.text_generator import balance_dict_to_message
 from telegramaccountingbot.accounting.accounting import Bookkeeper
 
 import os
@@ -10,29 +9,51 @@ with open(token_file, "r") as f:
     token = f.read()
 
     
+class InMemoryPersistence:
+    def __init__(self):
+        self._transactions = []
+        self._id_to_name = []
+
+    def add_id_to_name(self, _id, name):
+        self._id_to_name.append((_id, name))
+
+    def get_dict_id_to_name(self):
+        d = {}
+        for pair in self._id_to_name:
+            d[pair[0]] = pair[1]
+        return d
+
+    def get_transactions(self, _id):
+        l = []
+        for tr in self._transactions:
+            if tr['id'] == _id:
+                l.append(tr)
+        return l
+
+    def add_transaction(self, _id, value, date, location):
+        self._transactions.append(
+            {"id": _id, "value": value,
+             "date": date, "location": location})
+
+    
 class MockBookkeeper(Bookkeeper):
     def __init__(self):
-        self.dict_id_to_name = {}
-        
+        self.dict_id_to_name = {"a": "Anna", "b": "Bruno",
+                                "c": "Christ", "174510834": "Ilyas"}
+
+    def get_balance(self):
+        return {"a": 501, "b": 3010,
+                "c": 1267, "174510834": 500,
+                "average": 1317}
     
-class MockBot(Bot):
-
-    def _handle_balance(self, bot, update):
-        balance_dict = {"a": 501, "b": 3010,
-                        "c": 1267, "174510834": 500,
-                        "average": 1317}
-        id_to_name = {"a": "Anna", "b": "Bruno",
-                      "c": "Christ", "174510834": "Ilyas"}
-        telegram_id = update.message.chat_id
-        print(telegram_id)
-        message = balance_dict_to_message(id_to_name, balance_dict)
-        bot.send_message(chat_id=telegram_id,
-                         text=message)
-
-        
 def main():
-    bot = MockBot()
-    bot.set_bookkeeper(MockBookkeeper())
+    bot = Bot()
+    bookkeeper = Bookkeeper()
+    persistence = InMemoryPersistence()    
+    persistence.add_id_to_name("174510834", "Ilyas")
+    persistence.add_transaction("174510834", 1267, "today", "Nahkauf")
+    bookkeeper.set_persistence(persistence)
+    bot.set_bookkeeper(bookkeeper)
     bot.set_updater(Updater(token=token))
     print("initializing")
     bot.initialize_handler()
