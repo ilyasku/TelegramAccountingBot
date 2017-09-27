@@ -14,3 +14,17 @@ press enter to exit  Traceback (most recent call last):
   File "/home/ilyas/Projects/TelegramAccountingBot/telegramaccountingbot/executables/telegram_accounting_bot.py", line 30, in main
     raw_input("press enter to exit  ")
 IOError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "/home/ilyas/virtualenvs/telegram/bin/telegram-accounting-bot", line 11, in <module>
+    load_entry_point('telegramaccountingbot', 'console_scripts', 'telegram-accounting-bot')()
+  File "/home/ilyas/Projects/TelegramAccountingBot/telegramaccountingbot/executables/telegram_accounting_bot.py", line 24, in main
+    if len(sys.argv > 3):
+TypeError: object of type 'bool' has no len()
+initializing
+start polling
+press enter to exit  Traceback (most recent call last):
+  File "/home/ilyas/virtualenvs/telegram/bin/telegram-accounting-bot", line 11, in <module>
+    load_entry_point('telegramaccountingbot', 'console_scripts', 'telegram-accounting-bot')()
+  File "/home/ilyas/Projects/TelegramAccountingBot/telegramaccountingbot/executables/telegram_accounting_bot.py", line 41, in main
+    raw_input("press enter to exit  ")
+IOError: [Errno 9] Bad file descriptor

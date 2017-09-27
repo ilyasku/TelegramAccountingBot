@@ -19,7 +19,9 @@ setup(name='telegramaccountingbot',
       license='MIT',
       packages=["telegramaccountingbot",
                 "telegramaccountingbot.bot",
-                "telegramaccountingbot.accounting"],
+                "telegramaccountingbot.accounting",
+                "telegramaccountingbot.accounting.persistence",
+                "telegramaccountingbot.executables"],
       entry_points={
           "console_scripts": [
               "tab-mock=telegramaccountingbot.executables.mock_bot_memory:main",
@@ -27,6 +29,7 @@ setup(name='telegramaccountingbot',
           ]
       },
       install_requires=[
-          "python-telegram-bot"  # , "nose",
+          "python-telegram-bot",
+          "psycopg2"# , "nose",
       ],
       zip_safe=False)

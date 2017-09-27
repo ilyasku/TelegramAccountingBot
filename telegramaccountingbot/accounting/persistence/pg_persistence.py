@@ -3,9 +3,10 @@ import psycopg2
 
 class PGPersistence:
 
-    def __init__(self, db_name, db_user):
-        arg_str = "dbname={} user={}".format(db_name, db_user)
-        self.connection = psycopg2.connect(arg_str)
+    def __init__(self, db_name, db_user, db_password=None):
+        self.connection = psycopg2.connect(dbname=db_name,
+                                           user=db_user,
+                                           password=db_password)
 
     def get_dict_id_to_name(self):
         cursor = self.connection.cursor()
