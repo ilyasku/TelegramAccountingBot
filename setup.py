@@ -22,7 +22,8 @@ setup(name='telegramaccountingbot',
                 "telegramaccountingbot.accounting"],
       entry_points={
           "console_scripts": [
-              "tab-mock=telegramaccountingbot.executables.mock_bot_memory:main"
+              "tab-mock=telegramaccountingbot.executables.mock_bot_memory:main",
+              "telegram-accounting-bot=telegramaccountingbot.executables.telegram_accounting_bot:main"
           ]
       },
       install_requires=[

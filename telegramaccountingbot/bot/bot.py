@@ -37,8 +37,6 @@ class Bot:
                          text=message)
 
     def _handle_add(self, bot, update, args):
-        print("==== _handle_add")
-        print(args)
         telegram_id = update.message.chat_id
         if not self.bookkeeper.has_id(telegram_id):
             msg = "Unknown Telegram Id!"
@@ -65,7 +63,7 @@ class Bot:
                              text=msg)
             return
         location = str(args[1])
-        date = time.strftime("%Y:%m:%d::%H:%M:%S")
+        date = time.strftime("%Y-%m-%d")
         self.bookkeeper.add_transaction(telegram_id,
                                         value,
                                         date,
