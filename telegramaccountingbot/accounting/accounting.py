@@ -19,12 +19,12 @@ class Bookkeeper:
                 return True
         return False
         
-    def get_balance(self):
+    def get_balance(self, year: int=None, month: int=None):
         balance_dict = {}
         count = 0
         average = 0
         for _id in self.dict_id_to_name.keys():
-            list_of_transactions = self.persistence.get_transactions(_id)
+            list_of_transactions = self.persistence.get_transactions(_id, year, month)
             _sum = self._sum_transactions(list_of_transactions)
             balance_dict[_id] = _sum
             average += _sum

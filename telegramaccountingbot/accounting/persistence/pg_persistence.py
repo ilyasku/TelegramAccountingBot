@@ -1,4 +1,5 @@
 import psycopg2
+from datetime import datetime
 
 
 class PGPersistence:
@@ -18,7 +19,7 @@ class PGPersistence:
             dict_id_to_name[t[0]] = t[1]
         return dict_id_to_name
 
-    def get_transactions(self, _id):
+    def get_transactions(self, _id, year: int=None, month: int=None):
         cursor = self.connection.cursor()
         query_str = "SELECT * FROM transactions "
         query_str += "WHERE id = {}"
@@ -28,9 +29,16 @@ class PGPersistence:
         cursor.close()
         l = []
         for trans in transactions:
+            dtime = trans[1]
             d_trans = {"id": trans[0], "value": trans[2],
-                       "date": trans[1], "location": trans[3],
-                       "comment": trans[4]}
+                       "date": dtime, "location": trans[3],
+                       "comment": trans[4]}            
+            if year is not None:
+                if dtime.year != year:
+                    continue
+            if month is not None:
+                if dtime.month != month:
+                    continue
             l.append(d_trans)
         return l
 
